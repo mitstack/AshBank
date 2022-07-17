@@ -1,17 +1,18 @@
 function Deposit() {
-  //Loggedin user
+  
 
-  const ctx = React.useContext(UserContext);
-  const cookie = React.useContext(UserLoggedin);
-  const tx = React.useContext(UserTransaction);
+ 
+  
+   const tx = React.useContext(UserTransaction);
+   const bal = React.useContext(UserLoggedin);
+   const currentAccountBal = Number(bal.balance);
 
-  if (cookie.length >= 1) {
+  
     const [show, setShow] = React.useState(true);
     const [status, setStatus] = React.useState("");
     const [amount, setAmount] = React.useState("");
-    const [totalState, SetTotalState] = React.useState(cookie[0][0].balance);
-    const [file, setFile] = React.useState();
-
+    const [totalState, SetTotalState] = React.useState(currentAccountBal);
+    
     function validate(field, label) {
       if (!field) {
         setStatus("Error: " + label);
@@ -44,7 +45,7 @@ function Deposit() {
 
       SetTotalState(depositAmount + totalState);
 
-      cookie[0][0].balance = accountBalance;
+      
       tx.transactions.push({
         date: new Date().toJSON().slice(0, 10),
         transaction: "Deposit",
@@ -52,19 +53,11 @@ function Deposit() {
         accountBalance,
       });
 
-      const url = "http://localhost:3000/uploadFile";
-      const formData = new FormData();
-      formData.append("file", file);
-      const config = {
-        headers: {
-          "content-type": "multipart/form-data",
-        },
-      };
+      bal.balance = accountBalance;
 
-      // Backend piece when express is set up
-      /* React.axios.post(url, formData, config).then((response) => {
-      console.log(response.data);
-    });*/
+     
+
+      
       setAmount("");
 
       setShow(false);
@@ -74,18 +67,14 @@ function Deposit() {
       setShow(true);
     }
 
-    function handleChange(event) {
-      setFile(event.target.files[0]);
-    }
+   
 
-    function uploadFiles() {
-      document.getElementById("formFileMultiple").click();
-    }
+    
 
     return (
       <Card
         bgcolor="white"
-        header="Deposit Check"
+        header="Deposit"
         txtcolor="primary"
         status={status ? status : "Account Balance: $" + totalState}
         body={
@@ -93,31 +82,23 @@ function Deposit() {
             <>
               <h6 className="font-italic">Amount</h6>
               <input
-                type="input"
+                type="number"
                 className="form-control shadow p-3 mb-5 bg-body rounded"
                 id="amount"
-                placeholder="enter amount to deposit"
+                placeholder="Enter amount"
                 value={amount}
                 onChange={(e) => setAmount(e.currentTarget.value)}
               />
               
              
-                <img src="pictures/upload.png" height="50" width="50"/>
-              
-              <label htmlFor="formFileMultiple" className="form-label"></label>
-              <input
-                type="file"
-                id="formFileMultiple"
-                multiple
-                onChange={handleChange}
-              />
+                
               <br/>
-              <br/>
+             
               
 
               <button
                 type="submit"
-                className="btn btn-light shadow p-3 mb-5 bg-body rounded"
+                className="btn btn-dark shadow p-3 mb-5 bg-body rounded"
                 onClick={handleCreate}
               >Deposit</button>
             </>
@@ -136,7 +117,7 @@ function Deposit() {
         }
       />
     );
-  }
+  
 
-  return <Login />;
+ 
 }

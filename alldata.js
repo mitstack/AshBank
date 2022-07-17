@@ -10,7 +10,7 @@ function AllData(){
 
     return (
       <>
-        <tr className='table-info shadow-lg p-3 mb-5 bg-body rounded table-striped-columns'>
+        <tr className='table table-dark table-striped'>
           <td>{item.name}</td>
           <td>{item.email}</td>
           <td>{item.password}</td>
