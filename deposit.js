@@ -74,9 +74,14 @@ function Deposit() {
     return (
       <Card
         bgcolor="white"
-        header="Deposit"
+        header= "Deposit"
+                 
+
+        title = {"Account Balance: $" + totalState}
+        
+                  
         txtcolor="primary"
-        status={status ? status : "Account Balance: $" + totalState}
+        status={status}
         body={
           show ? (
             <>

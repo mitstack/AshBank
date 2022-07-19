@@ -100,7 +100,8 @@ function Transfer() {
         bgcolor="white"
         txtcolor="primary"
         header="Withdraw"
-        status={status ? status : "Account Balance: $" + accountState}
+        title = {"Account Balance: $" + accountState}
+        status={status}
         body={
           show ? (
             <>
